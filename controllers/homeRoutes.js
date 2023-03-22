@@ -10,7 +10,8 @@ router.get('/', async (req, res) => {
     const postData = await Post.findAll({
       include: [
         {
-          model: User,
+          model: Comment,
+          attributes: ['description'],
         },
       ],
     });
@@ -21,8 +22,10 @@ router.get('/', async (req, res) => {
     // Pass serialized data and session flag into template
     res.render('all-posts', { 
       posts, 
+      loggedIn: req.session.loggedIn,
     });
   } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 });
@@ -32,19 +35,24 @@ router.get('/post/:id', async (req, res) => {
   try {
     const postData = await Post.findByPk(req.params.id, {
       include: [
-        User,
         {
           model: Comment,
-          include: [User],
+          attributes: [
+            'id',
+            'description',
+            'user_id',
+            'post_id',
+          ]
+          
         },
       ],
     });
 
-    if (postData) {
-      const post = postData.get({ plain: true });
+    // if (postData) { //what is this
+       const post = postData.get({ plain: true });
 
-      res.render('single-post', { post })
-    }
+       res.render('single-post', { Post })
+    // }
 
 
   } catch (err) {
