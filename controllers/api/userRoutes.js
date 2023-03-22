@@ -1,9 +1,11 @@
 const router = require('express').Router();
 const { User } = require('../../models');
-const withAuth = require('../utils/auth')
+// const withAuth = require('../utils/auth')
 
 router.post('/', async (req, res) => {
   try {
+    console.log("Hitting my create user route from login.js")
+    console.log(req.body)
     const userData = await User.create(req.body);
 
     req.session.save(() => {
@@ -13,18 +15,22 @@ router.post('/', async (req, res) => {
       res.status(200).json(userData);
     });
   } catch (err) {
+    console.log(err)
     res.status(400).json(err);
   }
 });
 
 router.post('/login', async (req, res) => {
   try {
-    const userData = await User.findOne({ where: { email: req.body.email } });
+    console.log("trying to log in")
+    console.log(req.body)
+    //it makes use of username and password
+    const userData = await User.findOne({ where: { username: req.body.username } });
 
     if (!userData) {
       res
         .status(400)
-        .json({ message: 'Incorrect email or password, please try again' });
+        .json({ message: 'Incorrect username or password, please try again' });
       return;
     }
 
@@ -33,7 +39,7 @@ router.post('/login', async (req, res) => {
     if (!validPassword) {
       res
         .status(400)
-        .json({ message: 'Incorrect email or password, please try again' });
+        .json({ message: 'Incorrect username or password, please try again' });
       return;
     }
 
@@ -45,6 +51,7 @@ router.post('/login', async (req, res) => {
     });
 
   } catch (err) {
+    console.log(err)
     res.status(400).json(err);
   }
 });
