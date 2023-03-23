@@ -4,11 +4,21 @@
   <!-- If the user is logged in, render the gallery content -->
   {{#if logged_in}}
   <section class="flex-row justify-center">
-    {{!-- {{#each post.comment as |comment|}}
-    {{> comment-details}}
-    {{/each}} --}}
+    <ul>
+    {{#each post.comments as |comment|}}
+<li>{{comment.description}}<li>
+    {{/each}}
+    </ul>
   </section>
+  <textarea id="textArea">
+
+  </textarea>
+  <button data-id="{{post.id}}" id="addComment">Add comment</button>
+   <script src="/js/comment.js"></script>
   <!-- Otherwise, provide a link to login -->
-  
+  {{else}}
+ 
+  <a href="/login">You must login first to view this page</a>
   {{/if}}
+
 </section>
