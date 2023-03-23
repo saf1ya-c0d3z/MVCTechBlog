@@ -3,6 +3,7 @@ const { Post } = require('../../models');
  //const withAuth = require('../../utils/auth');
 
 router.post('/', async (req, res) => {
+  console.log(req.body)
   try {
     const newPost = await Post.create({
       ...req.body,
@@ -13,7 +14,7 @@ router.post('/', async (req, res) => {
   } catch (err) {
     res.status(400).json(err);
   }
-});
+});  
 
 router.delete('/:id', async (req, res) => {
   try {

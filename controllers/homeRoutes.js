@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { Post, User, Comment } = require('../models');
-// const withAuth = require('../utils/auth')
+ const withAuth = require('../utils/auth')
 
 
 // get all posts 
@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
     // Pass serialized data and session flag into template
     res.render('all-posts', { 
       posts, 
-      loggedIn: req.session.loggedIn,
+      logged_in: req.session.logged_in,
     });
   } catch (err) {
     console.log(err);
@@ -51,7 +51,7 @@ router.get('/post/:id', async (req, res) => {
     // if (postData) { //what is this
        const post = postData.get({ plain: true });
 
-       res.render('post', { Post })
+       res.render('post', { post, logged_in: req.session.logged_in})
     // }
 
 
@@ -61,24 +61,24 @@ router.get('/post/:id', async (req, res) => {
 });
 
 // Use withAuth middleware to prevent access to route
-//router.get('/profile', withAuth, async (req, res) => {
- // try {
+router.get('/profile', withAuth, async (req, res) => {
+ try {
     // Find the logged in user based on the session ID
-    //onst userData = await User.findByPk(req.session.user_id, {
-     // attributes: { exclude: ['password'] },
-//       include: [{ model: Post }],
-//     });
+    const userData = await User.findByPk(req.session.user_id, {
+     attributes: { exclude: ['password'] },
+      include: [{ model: Post }],
+    });
 
-//     const user = userData.get({ plain: true });
+    const user = userData.get({ plain: true });
 
-//     res.render('profile', {
-//       ...user,
-//       logged_in: true
-//     });
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+    res.render('profile', {
+      ...user,
+      logged_in: true
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 router.get('/login', (req, res) => {
   // If the user is already logged in, redirect the request to another route
