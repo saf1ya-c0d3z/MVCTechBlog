@@ -6,7 +6,7 @@
   <section class="flex-row justify-center">
     <ul>
     {{#each post.comments as |comment|}}
-<li>{{comment.description}}<li>
+<li>{{comment.user.username}} {{comment.description}} {{format_date comment.createdAt}}<li>
     {{/each}}
     </ul>
   </section>
@@ -22,3 +22,4 @@
   {{/if}}
 
 </section>
+

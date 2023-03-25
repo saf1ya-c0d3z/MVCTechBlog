@@ -37,13 +37,13 @@ router.get('/post/:id', async (req, res) => {
       include: [
         {
           model: Comment,
-          attributes: [
-            'id',
-            'description',
-            'user_id',
-            'post_id',
+        
+          include: [
+            {
+              model: User,
+
+            }
           ]
-          
         },
       ],
     });
@@ -70,9 +70,10 @@ router.get('/profile', withAuth, async (req, res) => {
     });
 
     const user = userData.get({ plain: true });
-
+    console.log(user)
     res.render('profile', {
-      ...user,
+      ...user, 
+      posts: user.posts,
       logged_in: true
     });
   } catch (err) {

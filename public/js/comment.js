@@ -38,6 +38,9 @@ const delButtonHandler = async (event) => {
 
 document.querySelector('#addComment').addEventListener('click', newFormHandler);
 
-document
-  .querySelector('#project-list')
-  .addEventListener('click', delButtonHandler);
+var deleteThis = document.querySelectorAll('.btn-danger');
+ for( var i=0; i<deleteThis.length;i++){
+  deleteThis[i].addEventListener("click", delButtonHandler)
+  
+ }
+  

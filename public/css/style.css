@@ -22,3 +22,40 @@ header, .project:not(:last-child) {
   font-weight: bold;
   margin-left: -5px;
 }
+
+#mainTitle {
+  background-color: gold;
+  text-decoration: tomato;
+}
+
+.body1 {
+background-color: rgb(182, 182, 91);
+}
+
+#project-list {
+  /* display: flex; */
+ padding-left:200px;
+  justify-content: space-between;
+}
+
+.btn.btn-danger {
+  position: relative;
+    right: 25px;
+  background-color: #e64c66;
+  color: #ffffff;
+}
+
+#theProj {
+  position: relative;
+  right:50px;
+}
+
+#theHeader {
+  postion: relative;
+  right: 40px;
+}
+
+#someThing {
+  position: relative;
+  left: 100px;
+}
